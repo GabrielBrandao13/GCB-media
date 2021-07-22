@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { useContext } from 'react';
+import { AuthContext } from '../src/contexts/AuthContext';
+
 
 export default function Home() {
+  const { userName } = useContext(AuthContext)
   return (
     <>
       <Head>
@@ -12,6 +16,9 @@ export default function Home() {
       </Head>
       <StyledHome>
         <header>
+          {userName && (
+            <h1>Bem vindo(a), {userName}</h1>
+          )}
           <a><Link href="/login">Login</Link></a>
           <a><Link href="/register">Registrar-se</Link></a>
         </header>

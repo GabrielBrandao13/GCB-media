@@ -1,15 +1,56 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { FormEvent, useState, useContext } from 'react';
+import { AuthContext } from '../src/contexts/AuthContext';
 
 export default function Login() {
+
+    const [user, setUser] = useState('');
+    const [pass, setPass] = useState('');
+
+    const setGlobalUser = useContext(AuthContext).setUser;
+
+    async function handleLogin(e: FormEvent) {
+        e.preventDefault()
+
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user,
+                pass
+            }),
+        })
+
+        const data = await res.json()
+        console.log(data)
+
+        if (data.sucess) {
+            console.log(`Logado com o id ${data.user.id} e nome ${data.user.name}`)
+            setGlobalUser({ id: data.user.id, name: data.user.name })
+        }
+    }
+
     return (
         <StyledLogin>
-            <form>
+            <form onSubmit={handleLogin}>
                 <h1>Login</h1>
 
                 <div className="inputs">
-                    <input type="text" placeholder="Usuário" />
-                    <input type="password" placeholder="Senha" />
+                    <input
+                        type="text"
+                        placeholder="Usuário"
+                        onChange={e => setUser(e.target.value)}
+                        value={user}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        onChange={e => setPass(e.target.value)}
+                        value={pass}
+                    />
                 </div>
 
                 <div className="buttons">
@@ -18,6 +59,9 @@ export default function Login() {
                     </button>
                     <p>
                         Não possui uma  conta? <a><Link href="/register">Registre-se!</Link></a>
+                    </p>
+                    <p>
+                        Voltar para a home <span><Link href="/">Home</Link></span>
                     </p>
 
                 </div>
@@ -89,7 +133,7 @@ const StyledLogin = styled.div`
             p{
                 color: rgb(44, 44, 44);
 
-                a{
+                span{
                     color: #0028ed;
                 }
             }

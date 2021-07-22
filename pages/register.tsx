@@ -1,16 +1,60 @@
 import styled from 'styled-components';
 
 import Link from 'next/link';
+import { FormEvent, useState } from 'react';
 
 export default function Register() {
+
+    const [user, setUser] = useState('')
+    const [pass, setPass] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
+
+    async function handleCreateNewAccount(e: FormEvent) {
+        e.preventDefault()
+
+        if (pass !== confirmPass) {
+            return;
+        }
+
+        const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user,
+                pass
+            }),
+        })
+
+        const data = await res.json()
+        console.log(data)
+
+    }
+
     return (
         <StyledRegister>
-            <form>
+            <form onSubmit={handleCreateNewAccount}>
                 <h1>Registar-se</h1>
                 <div className="inputs">
-                    <input type="text" placeholder="Digite o usuário" />
-                    <input type="password" placeholder="Senha" />
-                    <input type="password" placeholder="Confirmar senha" />
+                    <input
+                        type="text"
+                        placeholder="Digite o usuário"
+                        onChange={e => setUser(e.target.value)}
+                        value={user}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        onChange={e => setPass(e.target.value)}
+                        value={pass}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirmar senha"
+                        onChange={e => setConfirmPass(e.target.value)}
+                        value={confirmPass}
+                    />
                 </div>
                 <div className="buttons">
                     <button type="submit">
@@ -18,6 +62,9 @@ export default function Register() {
                     </button>
                     <p>
                         Já possui uma conta? <a><Link href="/login">Login</Link></a>
+                    </p>
+                    <p>
+                        Voltar para a home<span><Link href="/">Home</Link></span>
                     </p>
                 </div>
             </form>
@@ -87,7 +134,7 @@ const StyledRegister = styled.div`
             p{
                 color: rgb(44, 44, 44);
 
-                a{
+                span{
                     color: #0028ed;
                 }
             }
