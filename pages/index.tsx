@@ -2,13 +2,22 @@ import styled from 'styled-components';
 
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import { useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../src/contexts/AuthContext';
 
 
 export default function Home() {
-  const { userName } = useContext(AuthContext)
+  const { userName } = useContext(AuthContext);
+  const router = useRouter();
+
+  const [userSearch, setUserSearch] = useState('')
+
+  function handleSearchUser(e: FormEvent) {
+    e.preventDefault()
+    router.push(`/${userSearch}`)
+  }
   return (
     <>
       <Head>
@@ -16,14 +25,20 @@ export default function Home() {
       </Head>
       <StyledHome>
         <header>
-          {userName && (
-            <h1>Bem vindo(a), {userName}</h1>
-          )}
-          <a><Link href="/login">Login</Link></a>
-          <a><Link href="/register">Registrar-se</Link></a>
+
+          <Link href="/login"><a>Login</a></Link>
+          <Link href="/register"><a>Registrar-se</a></Link>
         </header>
         <main>
-          <h1>Bem vindo(a)!</h1>
+          <h1>Bem vindo(a)!{userName && ` ${userName}`}</h1>
+          <form onSubmit={handleSearchUser}>
+            <input
+              type="text"
+              onChange={e => setUserSearch(e.target.value)}
+              value={userSearch}
+              placeholder="Que usuário deseja conhecer?"
+            />
+          </form>
         </main>
       </StyledHome>
 
@@ -65,5 +80,20 @@ const StyledHome = styled.div`
     display:flex;
     flex-flow: column nowrap;
     align-items:center;
+
+    form{
+      width: 100%;
+      max-width: 400px;
+      display:flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      input{
+        width: 100%;
+        border: 2px solid gray;
+        border-radius: 8px;
+        padding: 4px;
+        outline: none;
+      }
+    }
   }
 `

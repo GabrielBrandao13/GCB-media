@@ -61,10 +61,10 @@ export default function Register() {
                         Registrar-se
                     </button>
                     <p>
-                        Já possui uma conta? <a><Link href="/login">Login</Link></a>
+                        Já possui uma conta? <Link href="/login"><a>Login</a></Link>
                     </p>
                     <p>
-                        Voltar para a home<span><Link href="/">Home</Link></span>
+                        Voltar para a <Link href="/"><a>Home</a></Link>
                     </p>
                 </div>
             </form>
@@ -134,7 +134,7 @@ const StyledRegister = styled.div`
             p{
                 color: rgb(44, 44, 44);
 
-                span{
+                a{
                     color: #0028ed;
                 }
             }

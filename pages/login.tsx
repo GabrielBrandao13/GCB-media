@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FormEvent, useState, useContext } from 'react';
 import { AuthContext } from '../src/contexts/AuthContext';
 
@@ -9,6 +10,8 @@ export default function Login() {
     const [pass, setPass] = useState('');
 
     const setGlobalUser = useContext(AuthContext).setUser;
+
+    const router = useRouter();
 
     async function handleLogin(e: FormEvent) {
         e.preventDefault()
@@ -28,15 +31,16 @@ export default function Login() {
         console.log(data)
 
         if (data.sucess) {
-            console.log(`Logado com o id ${data.user.id} e nome ${data.user.name}`)
-            setGlobalUser({ id: data.user.id, name: data.user.name })
+            console.log(`Logado com o id ${data.user.id} e nome ${data.user.name}`);
+            setGlobalUser({ id: data.user.id, name: data.user.name });
+            router.push(`/${data.user.name}`);
         }
     }
 
     return (
         <StyledLogin>
             <form onSubmit={handleLogin}>
-                <h1>Login</h1>
+                <h1>Logi</h1>
 
                 <div className="inputs">
                     <input
@@ -58,10 +62,10 @@ export default function Login() {
                         Login
                     </button>
                     <p>
-                        Não possui uma  conta? <a><Link href="/register">Registre-se!</Link></a>
+                        Não possui uma  conta? <Link href="/register"><a>Registre-se!</a></Link>
                     </p>
                     <p>
-                        Voltar para a home <span><Link href="/">Home</Link></span>
+                        Voltar para a home <Link href="/"><a>Home</a></Link>
                     </p>
 
                 </div>
@@ -133,7 +137,7 @@ const StyledLogin = styled.div`
             p{
                 color: rgb(44, 44, 44);
 
-                span{
+                a{
                     color: #0028ed;
                 }
             }
