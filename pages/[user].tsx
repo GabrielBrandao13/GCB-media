@@ -7,6 +7,7 @@ import Link from 'next/link';
 type UserInfoType = {
     id?: number;
     name?: string;
+    exists?: boolean;
 }
 
 export default function UserPage() {
@@ -29,7 +30,9 @@ export default function UserPage() {
         })
 
         const data = await res.json()
-        setUserInfo(data.user)
+        if (data.sucess) {
+            return setUserInfo({ ...data.user, exists: true })
+        }
         // console.log(data)
     }
 
@@ -38,20 +41,35 @@ export default function UserPage() {
     }, [])
 
     return (
-        <StyledUserPage>
-            <header>
-                {userInfo.name == currentUser ? (
-                    <h1>Bem vindo(a) de volta! {currentUser}</h1>
-                ) : (
-                    <h1>{user}</h1>
-                )}
-            </header>
-            <main>
-                <h1>Bem vindo(a)</h1>
-                <p>No momento não temos nada a exibir</p>
-                <Link href="/">Home</Link>
-            </main>
-        </StyledUserPage>
+        <>
+            {userInfo.exists ? (
+
+                <StyledUserPage>
+                    <header>
+                        {userInfo.name == currentUser ? (
+                            <h1>Bem vindo(a) de volta! {currentUser}</h1>
+                        ) : (
+                            <h1>{user}</h1>
+                        )}
+                    </header>
+                    <main>
+                        <h1>Bem vindo(a)</h1>
+                        <p>No momento não temos nada a exibir</p>
+                        <Link href="/"><a>Home</a></Link>
+                    </main>
+                </StyledUserPage>
+
+            ) : (
+                <StyledErrorPage>
+                    <div className="info">
+
+                        <h1>Usuário não encontrado</h1>
+                        <p>Houve uma falha ao encontrar o usuário "{user}".</p>
+                        <Link href="/"><a>Home</a></Link>
+                    </div>
+                </StyledErrorPage>
+            )}
+        </>
     )
 }
 
@@ -77,6 +95,39 @@ const StyledUserPage = styled.div`
         display:flex;
         flex-flow: column nowrap;
         align-items:center;
+    }
+`
+
+const StyledErrorPage = styled.div`
+    height: 100vh;
+    display:flex;
+    flex-flow: column nowrap;
+    align-items:center;
+    justify-content: center;
+    background: rgb(248, 248, 248);
+
+    .info{
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, .3);
+        border-radius: 8px;
+        display:flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        background:white;
+
+        h1{
+            color: rgb(13, 13, 13);
+        }
+        p{
+            color: rgb(43, 43, 43);
+            font-size: 13pt;
+        }
+        a{
+            color: blue;
+            font-size: 14pt;
+        }
     }
 `
 

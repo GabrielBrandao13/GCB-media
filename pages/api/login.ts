@@ -32,7 +32,7 @@ export default function login(req: NextApiRequest, res: NextApiResponse) {
             WHERE userName='${user}' AND userPassword='${pass}'
         `,
         (err, result) => {
-            console.log(result[0])
+            // console.log(result[0])
             if (!result[0]) {
                 return res.json({
                     status: 'Usuário não encontrado',

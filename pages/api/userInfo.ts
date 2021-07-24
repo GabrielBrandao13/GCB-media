@@ -17,7 +17,12 @@ export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
         WHERE userName = '${userName}'
         `,
         (err, result) => {
-            // console.log(result, err)
+            if (err || !result[0]) {
+                return res.json({
+                    status: 'Falha ao coletar informações do usuário',
+                    sucess: false,
+                })
+            }
             return res.json({
                 status: 'Usuário encontrado',
                 sucess: true,
