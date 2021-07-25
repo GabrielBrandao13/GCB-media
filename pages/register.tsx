@@ -2,12 +2,15 @@ import styled from 'styled-components';
 
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Register() {
 
     const [user, setUser] = useState('')
     const [pass, setPass] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+
+    const router = useRouter()
 
     async function handleCreateNewAccount(e: FormEvent) {
         e.preventDefault()
@@ -27,8 +30,10 @@ export default function Register() {
             }),
         })
 
-        const data = await res.json()
-        console.log(data)
+        // const data = await res.json()
+        // console.log(data)
+
+        router.push('/')
 
     }
 

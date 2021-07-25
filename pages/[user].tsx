@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, FormEvent } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../src/contexts/AuthContext';
 import Link from 'next/link';
+
+import { DeleteUserMenu } from '../src/components/DeleteUserMenu';
 
 type UserInfoType = {
     id?: number;
@@ -15,6 +17,8 @@ export default function UserPage() {
 
     const { user } = router.query;
     const [userInfo, setUserInfo] = useState<UserInfoType>({})
+    const [deletingUser, setDeletingUser] = useState(false);
+
 
     const currentUser = useContext(AuthContext).userName
 
@@ -42,12 +46,18 @@ export default function UserPage() {
 
     return (
         <>
+            {deletingUser && (
+                <DeleteUserMenu close={() => setDeletingUser(false)} />
+            )}
             {userInfo.exists ? (
 
                 <StyledUserPage>
                     <header>
                         {userInfo.name == currentUser ? (
-                            <h1>Bem vindo(a) de volta! {currentUser}</h1>
+                            <>
+                                <h1>Bem vindo(a) de volta! {currentUser}</h1>
+                                <button onClick={() => setDeletingUser(true)}>Deletar conta</button>
+                            </>
                         ) : (
                             <h1>{user}</h1>
                         )}
@@ -84,10 +94,19 @@ const StyledUserPage = styled.div`
         display:flex;
         flex-flow: row nowrap;
         align-items:center;
+        justify-content: space-between;
         height: 100px;
 
         > *{
             margin: 5px;
+        }
+
+        button{
+            background:white;
+            border:none;
+            border-radius: 4px;
+            font-size: 12pt;
+            cursor:pointer;
         }
     }
 

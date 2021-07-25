@@ -40,7 +40,7 @@ export default function Login() {
     return (
         <StyledLogin>
             <form onSubmit={handleLogin}>
-                <h1>Logi</h1>
+                <h1>Login</h1>
 
                 <div className="inputs">
                     <input
