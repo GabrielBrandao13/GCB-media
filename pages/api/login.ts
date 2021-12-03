@@ -29,8 +29,9 @@ export default function login(req: NextApiRequest, res: NextApiResponse) {
     connection.query(
         `
         SELECT * FROM tbUsers 
-            WHERE userName='${user}' AND userPassword='${pass}'
+            WHERE userName=? AND userPassword=?
         `,
+        [user, pass],
         (err, result) => {
             // console.log(result[0])
             if (!result[0]) {

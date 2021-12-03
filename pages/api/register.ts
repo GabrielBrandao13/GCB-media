@@ -14,8 +14,9 @@ export default function register(req: NextApiRequest, res: NextApiResponse) {
     connection.query(
         `
         SELECT * FROM tbUsers
-        WHERE userName = '${user}'
+        WHERE userName = ?
         `,
+        [user],
         (err, result) => {
             if (result[0]) {
                 console.log('Usuário já existe')
@@ -33,7 +34,8 @@ export default function register(req: NextApiRequest, res: NextApiResponse) {
     function registerUser() {
 
         connection.query(
-            `INSERT INTO tbUsers(userName, userPassword) VALUES('${user}', '${pass}')`,
+            `INSERT INTO tbUsers(userName, userPassword) VALUES(?, ?)`,
+            [user, pass],
             (err, result) => {
                 if (!err) {
                     return res.json({

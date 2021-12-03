@@ -14,8 +14,9 @@ export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
     connection.query(
         `
         SELECT userId, userName FROM tbUsers
-        WHERE userName = '${userName}'
+        WHERE userName = ?
         `,
+        [userName],
         (err, result) => {
             if (err || !result[0]) {
                 return res.json({

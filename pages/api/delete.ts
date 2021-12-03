@@ -8,8 +8,9 @@ export default function deleteUser(req: Request, res: Response) {
         connection.query(
             `
             DELETE FROM tbUsers
-            WHERE userName = '${userName}' AND userPassword = '${password}'
+            WHERE userName = ? AND userPassword = ?
             `,
+            [userName, password],
             (err, result) => {
                 if (err) {
                     return res.json({
