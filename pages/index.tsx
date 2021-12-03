@@ -9,7 +9,12 @@ import { AuthContext } from '../src/contexts/AuthContext';
 
 
 export default function Home() {
-  const userName = useContext(AuthContext).user.name;
+
+  let userName = '';
+  const { user } = useContext(AuthContext)
+  if (!!user) {
+    userName = useContext(AuthContext).user.name;
+  }
   const router = useRouter();
 
   const [userSearch, setUserSearch] = useState('')

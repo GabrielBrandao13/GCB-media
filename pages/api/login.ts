@@ -1,19 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { v4 as uuid } from 'uuid'
 
 import { connection } from '../../src/services/mysql';
-
-
-type userType = {
-    id: number;
-    name: string;
-}
-
-type apiResponseType = {
-    status: string;
-    sucess: boolean;
-
-    user?: userType;
-}
 
 export default function login(req: NextApiRequest, res: NextApiResponse) {
     const { user, pass } = req.body
@@ -22,7 +10,7 @@ export default function login(req: NextApiRequest, res: NextApiResponse) {
         return res.json({
             status: 'Informações faltantes',
             sucess: false
-        } as apiResponseType)
+        })
     }
 
 
@@ -38,7 +26,7 @@ export default function login(req: NextApiRequest, res: NextApiResponse) {
                 return res.json({
                     status: 'Usuário não encontrado',
                     sucess: false,
-                } as apiResponseType)
+                })
             }
 
             return res.json({
@@ -47,8 +35,9 @@ export default function login(req: NextApiRequest, res: NextApiResponse) {
                 user: {
                     id: result[0].userId,
                     name: result[0].userName,
+                    token: uuid()
                 }
-            } as apiResponseType)
+            })
         }
     )
 

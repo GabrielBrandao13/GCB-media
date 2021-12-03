@@ -20,7 +20,13 @@ export default function UserPage() {
     const [deletingUser, setDeletingUser] = useState(false);
 
 
-    const currentUser = useContext(AuthContext).user
+    let currentUser = useContext(AuthContext).user
+    if (currentUser === null) {
+        currentUser = {
+            id: '0',
+            name: ''
+        }
+    }
 
     async function getUserData() {
         const res = await fetch('/api/userInfo', {
@@ -37,7 +43,6 @@ export default function UserPage() {
         if (data.sucess) {
             return setUserInfo({ ...data.user, exists: true })
         }
-        // console.log(data)
     }
 
     useEffect(() => {

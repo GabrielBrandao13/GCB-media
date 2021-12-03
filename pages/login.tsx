@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FormEvent, useState, useContext } from 'react';
 import { AuthContext } from '../src/contexts/AuthContext';
 
@@ -9,31 +8,12 @@ export default function Login() {
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
 
-    const setGlobalUser = useContext(AuthContext).setUser;
-
-    const router = useRouter();
+    const { signIn } = useContext(AuthContext);
 
     async function handleLogin(e: FormEvent) {
         e.preventDefault()
 
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user,
-                pass
-            }),
-        })
-
-        const data = await res.json()
-        console.log(data)
-
-        if (data.sucess) {
-            setGlobalUser({ id: data.user.id, name: data.user.name });
-            router.push(`/${data.user.name}`);
-        }
+        signIn(user, pass)
     }
 
     return (
