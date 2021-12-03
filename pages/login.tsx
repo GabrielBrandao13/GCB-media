@@ -31,7 +31,6 @@ export default function Login() {
         console.log(data)
 
         if (data.sucess) {
-            // console.log(`Logado com o id ${data.user.id} e nome ${data.user.name}`);
             setGlobalUser({ id: data.user.id, name: data.user.name });
             router.push(`/${data.user.name}`);
         }

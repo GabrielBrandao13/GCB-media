@@ -5,8 +5,7 @@ type AuthContextProviderPropsType = {
 }
 
 type authContextValueType = {
-    id?: number;
-    userName?: string;
+    user: UserType;
     setUser: (user: UserType) => void;
 }
 
@@ -21,7 +20,7 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
     const [user, setUser] = useState<UserType>({})
 
     return (
-        <AuthContext.Provider value={{ userName: user.name, id: user.id, setUser } as authContextValueType}>
+        <AuthContext.Provider value={{ user, setUser } as authContextValueType}>
             {children}
         </AuthContext.Provider>
 

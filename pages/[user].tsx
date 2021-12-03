@@ -20,7 +20,7 @@ export default function UserPage() {
     const [deletingUser, setDeletingUser] = useState(false);
 
 
-    const currentUser = useContext(AuthContext).userName
+    const currentUser = useContext(AuthContext).user
 
     async function getUserData() {
         const res = await fetch('/api/userInfo', {
@@ -53,9 +53,9 @@ export default function UserPage() {
 
                 <StyledUserPage>
                     <header>
-                        {userInfo.name == currentUser ? (
+                        {userInfo.name == currentUser.name ? (
                             <>
-                                <h1>Bem vindo(a) de volta! {currentUser}</h1>
+                                <h1>Bem vindo(a) de volta! {currentUser.name}</h1>
                                 <button onClick={() => setDeletingUser(true)}>Deletar conta</button>
                             </>
                         ) : (
