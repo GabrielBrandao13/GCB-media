@@ -77,17 +77,6 @@ export default function UserPage() {
             {userInfo.exists ? (
 
                 <StyledUserPage>
-                    <header>
-                        {userInfo.name === currentUser.name ? (
-                            <>
-                                <h1>Bem vindo(a) de volta! {currentUser.name}</h1>
-                                <button onClick={() => setDeletingUser(true)}>Deletar conta</button>
-                                <button onClick={() => router.push('./createPost')}>Criar postagem</button>
-                            </>
-                        ) : (
-                            <h1>{user}</h1>
-                        )}
-                    </header>
                     <main>
                         <h1>Bem vindo(a)</h1>
 
@@ -138,7 +127,7 @@ const StyledUserPage = styled.div`
             background:white;
             border:none;
             border-radius: 4px;
-            font-size: 12pt;
+            font-size: 14pt;
             cursor:pointer;
         }
     }

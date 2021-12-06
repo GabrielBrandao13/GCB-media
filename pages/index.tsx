@@ -29,11 +29,6 @@ export default function Home() {
         <title>Home</title>
       </Head>
       <StyledHome>
-        <header>
-
-          <Link href="/login"><a>Login</a></Link>
-          <Link href="/register"><a>Registrar-se</a></Link>
-        </header>
         <main>
           <h1>Bem vindo(a)!{userName && ` ${userName}`}</h1>
           <form onSubmit={handleSearchUser}>
@@ -53,33 +48,8 @@ export default function Home() {
 
 const StyledHome = styled.div`
   height: 100vh;
-
-  header{
-    background-color:#8110e3;
-    height: 100px;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content: flex-end;
-
-    > *{
-      margin: 5px;
-    }
-
-    a{
-      text-decoration:none;
-      color:white;
-      font-size: 15pt;
-      padding: 2px;
-      transition: .2s;
-      border-radius: 3px;
-      display:inline-block;
-
-      &:hover{
-        background: rgba(0, 0, 0, .3);
-      }
-    }
-  }
+  background: #4110e3;
+  color:white;
 
   main{
     display:flex;
@@ -92,12 +62,14 @@ const StyledHome = styled.div`
       display:flex;
       flex-flow: column nowrap;
       align-items: center;
+
       input{
         width: 100%;
-        border: 2px solid gray;
+        border:none;
         border-radius: 8px;
-        padding: 4px;
+        padding: 10px;
         outline: none;
+        font-size: 11pt;
       }
     }
   }
