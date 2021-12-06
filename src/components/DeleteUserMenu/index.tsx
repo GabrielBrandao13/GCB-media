@@ -9,7 +9,7 @@ type DeleteUserMenuPropsType = {
 
 
 export function DeleteUserMenu({ close }: DeleteUserMenuPropsType) {
-    const { setUser, userName } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const router = useRouter()
 
     const [password, setPassword] = useState('')
@@ -23,12 +23,13 @@ export function DeleteUserMenu({ close }: DeleteUserMenuPropsType) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userName,
+                userName: user.name,
                 password
             })
         })
 
-        setUser({})
+        logout()
+
         close()
         router.push('/')
     }

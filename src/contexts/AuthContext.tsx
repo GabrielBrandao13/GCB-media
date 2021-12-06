@@ -9,6 +9,7 @@ type AuthContextProviderPropsType = {
 type authContextValueType = {
     user: User;
     signIn: (userName: String, password: String) => void;
+    logout: () => void;
 }
 
 type User = {
@@ -58,8 +59,12 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
 
     }
 
+    function logout() {
+        setUser(null)
+    }
+
     return (
-        <AuthContext.Provider value={{ user, signIn } as authContextValueType}>
+        <AuthContext.Provider value={{ user, signIn, logout } as authContextValueType}>
             {children}
         </AuthContext.Provider>
 
