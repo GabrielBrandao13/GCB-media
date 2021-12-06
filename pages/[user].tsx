@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { AuthContext } from '../src/contexts/AuthContext';
 import Link from 'next/link';
 
+import { Post } from './api/listPosts'
+
 import { DeleteUserMenu } from '../src/components/DeleteUserMenu';
 
 type UserInfoType = {
@@ -45,8 +47,26 @@ export default function UserPage() {
         }
     }
 
+    const [posts, setPosts] = useState<Post[]>([])
+
+    async function getUserPosts() {
+        const res = await fetch('/api/listPosts', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: userInfo.id
+            })
+        })
+
+        const data = await res.json()
+        setPosts(data)
+    }
+
     useEffect(() => {
         getUserData()
+        getUserPosts()
     }, [])
 
     return (
@@ -58,10 +78,11 @@ export default function UserPage() {
 
                 <StyledUserPage>
                     <header>
-                        {userInfo.name == currentUser.name ? (
+                        {userInfo.name === currentUser.name ? (
                             <>
                                 <h1>Bem vindo(a) de volta! {currentUser.name}</h1>
                                 <button onClick={() => setDeletingUser(true)}>Deletar conta</button>
+                                <button onClick={() => router.push('./createPost')}>Criar postagem</button>
                             </>
                         ) : (
                             <h1>{user}</h1>
@@ -69,7 +90,14 @@ export default function UserPage() {
                     </header>
                     <main>
                         <h1>Bem vindo(a)</h1>
-                        <p>No momento não temos nada a exibir</p>
+
+                        {posts.map((post: Post) => (
+                            <div>
+                                <p>
+                                    {post.text}
+                                </p>
+                            </div>
+                        ))}
                         <Link href="/"><a>Home</a></Link>
                     </main>
                 </StyledUserPage>
