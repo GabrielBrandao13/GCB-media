@@ -1,15 +1,15 @@
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from '../src/contexts/AuthContext';
+import { AuthContext } from '../../src/contexts/AuthContext';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
 
-import { Post } from './api/listPosts'
+import { Post } from '../api/listPosts'
 
-import { DeleteUserMenu } from '../src/components/DeleteUserMenu';
+import { DeleteUserMenu } from '../../src/components/DeleteUserMenu';
 import { ParsedUrlQuery } from 'querystring'
 
-import { UserPost } from '../src/components/UserPost'
+import { UserPost } from '../../src/components/UserPost'
 
 type UserPageProps = {
     userData: GetStaticPropsFinalData;

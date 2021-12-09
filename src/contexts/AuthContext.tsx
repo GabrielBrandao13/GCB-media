@@ -55,7 +55,7 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
         })
 
         setUser(user)
-        Router.push(`/${user.name}`)
+        Router.push(`/users/${user.name}`)
 
     }
 

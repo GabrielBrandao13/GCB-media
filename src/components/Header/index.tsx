@@ -12,16 +12,18 @@ function Header({ className }: HeaderProps) {
     const { user, logout } = useContext(AuthContext)
     return (
         <header className={className}>
+            <Link href="/"><a>Home</a></Link>
             {user !== null ? (
                 <>
                     <h2>{user.name}</h2>
+                    <Link href="/createPost"><a>Adicionar postagem</a></Link>
                     <button onClick={logout}>Logout</button>
                 </>
             ) : (
                 <>
                     <h2>Não autenticado</h2>
-                    <Link href="./login"><a>Login</a></Link>
-                    <Link href="./register"><a>Registrar</a></Link>
+                    <Link href="/login"><a>Login</a></Link>
+                    <Link href="/register"><a>Registrar</a></Link>
                 </>
             )}
         </header>
@@ -37,7 +39,7 @@ const StyledHeader = styled(Header)`
     height: 100px;
 
     & > *{
-        margin: 5px;
+        margin: 10px;
     }
 
     & > *:nth-child(1){

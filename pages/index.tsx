@@ -21,7 +21,7 @@ export default function Home() {
 
   function handleSearchUser(e: FormEvent) {
     e.preventDefault()
-    router.push(`/${userSearch}`)
+    router.push(`/users/${userSearch}`)
   }
   return (
     <>
