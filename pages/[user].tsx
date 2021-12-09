@@ -17,7 +17,6 @@ type UserPageProps = {
 export default function UserPage({ userData }: UserPageProps) {
     const router = useRouter();
 
-    const { user } = router.query;
     const [deletingUser, setDeletingUser] = useState(false);
 
     let currentUser = useContext(AuthContext).user
