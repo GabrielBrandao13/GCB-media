@@ -1,26 +1,24 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState, useContext, FormEvent } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../src/contexts/AuthContext';
 import Link from 'next/link';
+import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
 
 import { Post } from './api/listPosts'
 
 import { DeleteUserMenu } from '../src/components/DeleteUserMenu';
+import { ParsedUrlQuery } from 'querystring'
 
-type UserInfoType = {
-    id?: number;
-    name?: string;
-    exists?: boolean;
+type UserPageProps = {
+    userData: GetStaticPropsFinalData;
 }
 
-export default function UserPage() {
+export default function UserPage({ userData }: UserPageProps) {
     const router = useRouter();
 
     const { user } = router.query;
-    const [userInfo, setUserInfo] = useState<UserInfoType>({})
     const [deletingUser, setDeletingUser] = useState(false);
-
 
     let currentUser = useContext(AuthContext).user
     if (currentUser === null) {
@@ -30,79 +28,95 @@ export default function UserPage() {
         }
     }
 
-    async function getUserData() {
-        const res = await fetch('/api/userInfo', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userName: user
-            })
-        })
-
-        const data = await res.json()
-        if (data.sucess) {
-            return setUserInfo({ ...data.user, exists: true })
-        }
-    }
-
-    const [posts, setPosts] = useState<Post[]>([])
-
-    async function getUserPosts() {
-        const res = await fetch('/api/listPosts', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId: userInfo.id
-            })
-        })
-
-        const data = await res.json()
-        setPosts(data)
-    }
-
-    useEffect(() => {
-        getUserData()
-        getUserPosts()
-    }, [])
-
     return (
         <>
             {deletingUser && (
                 <DeleteUserMenu close={() => setDeletingUser(false)} />
             )}
-            {userInfo.exists ? (
+            <StyledUserPage>
+                <main>
+                    <h1>{userData.userName}</h1>
 
-                <StyledUserPage>
-                    <main>
-                        <h1>Bem vindo(a)</h1>
+                    {userData.posts.map((post: Post) => (
+                        <div>
+                            <p>
+                                {post.text}
+                            </p>
+                        </div>
+                    ))}
 
-                        {posts.map((post: Post) => (
-                            <div>
-                                <p>
-                                    {post.text}
-                                </p>
-                            </div>
-                        ))}
-                        <Link href="/"><a>Home</a></Link>
-                    </main>
-                </StyledUserPage>
-
-            ) : (
-                <StyledErrorPage>
-                    <div className="info">
-
-                        <h1>Usuário não encontrado</h1>
-                        <p>Houve uma falha ao encontrar o usuário "{user}".</p>
-                        <Link href="/"><a>Home</a></Link>
-                    </div>
-                </StyledErrorPage>
-            )}
+                    <Link href="/"><a>Home</a></Link>
+                </main>
+            </StyledUserPage>
         </>
     )
+}
+
+interface GetStaticPropsParams extends ParsedUrlQuery {
+    user: string
+}
+
+type GetStaticPropsFinalData = {
+    userName: string;
+    id: number | null;
+    posts: Post[];
+}
+
+export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
+    const { user } = context.params as GetStaticPropsParams
+
+    var finalData: GetStaticPropsFinalData = {
+        userName: user,
+        id: null,
+        posts: []
+    }
+
+    const res = await fetch('http://localhost:3000/api/userInfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userName: user
+        })
+    })
+
+    const userData = await res.json()
+    if (userData.sucess) {
+        finalData.id = userData.user.id
+    } else {
+        return {
+            notFound: true
+        }
+    }
+
+    const resPosts = await fetch('http://localhost:3000/api/listPosts', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: finalData.id
+        })
+    })
+
+    const userPosts = await resPosts.json()
+
+    finalData.posts = userPosts
+
+    return {
+        props: {
+            userData: finalData
+        },
+        revalidate: 60
+    }
+}
+
+export const getStaticPaths: GetStaticPaths = async (context: GetStaticPathsContext) => {
+    return {
+        paths: [],
+        fallback: true
+    }
 }
 
 const StyledUserPage = styled.div`
