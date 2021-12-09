@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../src/contexts/AuthContext';
@@ -10,13 +9,13 @@ import { Post } from './api/listPosts'
 import { DeleteUserMenu } from '../src/components/DeleteUserMenu';
 import { ParsedUrlQuery } from 'querystring'
 
+import { UserPost } from '../src/components/UserPost'
+
 type UserPageProps = {
     userData: GetStaticPropsFinalData;
 }
 
 export default function UserPage({ userData }: UserPageProps) {
-    const router = useRouter();
-
     const [deletingUser, setDeletingUser] = useState(false);
 
     let currentUser = useContext(AuthContext).user
@@ -37,11 +36,7 @@ export default function UserPage({ userData }: UserPageProps) {
                     <h1>{userData.userName}</h1>
 
                     {userData.posts.map((post: Post) => (
-                        <div>
-                            <p>
-                                {post.text}
-                            </p>
-                        </div>
+                        <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
                     ))}
 
                     <Link href="/"><a>Home</a></Link>
