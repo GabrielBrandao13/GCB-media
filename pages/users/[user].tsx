@@ -38,8 +38,6 @@ export default function UserPage({ userData }: UserPageProps) {
                     {userData.posts.map((post: Post) => (
                         <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
                     ))}
-
-                    <Link href="/"><a>Home</a></Link>
                 </main>
             </StyledUserPage>
         </>
