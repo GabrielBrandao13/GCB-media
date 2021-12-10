@@ -1,7 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from '../../src/contexts/AuthContext';
-import Link from 'next/link';
 import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
 
 import { Post } from '../api/listPosts'
@@ -17,14 +15,6 @@ type UserPageProps = {
 
 export default function UserPage({ userData }: UserPageProps) {
     const [deletingUser, setDeletingUser] = useState(false);
-
-    let currentUser = useContext(AuthContext).user
-    if (currentUser === null) {
-        currentUser = {
-            id: '0',
-            name: ''
-        }
-    }
 
     return (
         <>
