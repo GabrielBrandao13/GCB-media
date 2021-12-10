@@ -12,16 +12,16 @@ function Header({ className }: HeaderProps) {
     const { user, logout } = useContext(AuthContext)
     return (
         <header className={className}>
-            <Link href="/"><a>Home</a></Link>
+            <Link href="/"><h2 className="logo">GCB media</h2></Link>
+
             {user !== null ? (
                 <>
                     <h2>{user.name}</h2>
-                    <Link href="/createPost"><a>Adicionar postagem</a></Link>
+                    <Link href="/"><a>Home</a></Link>
                     <button onClick={logout}>Logout</button>
                 </>
             ) : (
                 <>
-                    <h2>Não autenticado</h2>
                     <Link href="/login"><a>Login</a></Link>
                     <Link href="/register"><a>Registrar</a></Link>
                 </>
@@ -61,6 +61,9 @@ const StyledHeader = styled(Header)`
         cursor:pointer;
         background:black;
         color:white;
+    }
+    .logo{
+        cursor:pointer;
     }
 `
 

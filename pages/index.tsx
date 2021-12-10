@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>GCB media - início</title>
       </Head>
       <StyledHome>
         <main>
