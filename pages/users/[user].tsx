@@ -10,6 +10,8 @@ import { ParsedUrlQuery } from 'querystring'
 
 import { UserPost } from '../../src/components/UserPost'
 
+import { useUser } from '../../src/hooks/useUser'
+
 type UserPageProps = {
     userData: GetStaticPropsFinalData;
 }
@@ -51,48 +53,13 @@ type GetStaticPropsFinalData = {
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
     const { user } = context.params as GetStaticPropsParams
 
-    var finalData: GetStaticPropsFinalData = {
-        userName: user,
-        id: null,
-        posts: []
+    const userData = await useUser(user)
+    if (userData === null) return {
+        notFound: true
     }
-
-    const res = await fetch('http://localhost:3000/api/userInfo', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userName: user
-        })
-    })
-
-    const userData = await res.json()
-    if (userData.sucess) {
-        finalData.id = userData.user.id
-    } else {
-        return {
-            notFound: true
-        }
-    }
-
-    const resPosts = await fetch('http://localhost:3000/api/listPosts', {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            userId: finalData.id
-        })
-    })
-
-    const userPosts = await resPosts.json()
-
-    finalData.posts = userPosts
-
     return {
         props: {
-            userData: finalData
+            userData
         },
         revalidate: 60
     }
