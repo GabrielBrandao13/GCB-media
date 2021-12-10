@@ -14,9 +14,10 @@ import { useUser } from '../../src/hooks/useUser'
 
 type UserPageProps = {
     userData: GetStaticPropsFinalData;
+    className?: string;
 }
 
-export default function UserPage({ userData }: UserPageProps) {
+function UserPage({ userData, className }: UserPageProps) {
     const [deletingUser, setDeletingUser] = useState(false);
 
     return (
@@ -27,15 +28,13 @@ export default function UserPage({ userData }: UserPageProps) {
             {deletingUser && (
                 <DeleteUserMenu close={() => setDeletingUser(false)} />
             )}
-            <StyledUserPage>
-                <main>
-                    <h1>{userData.userName}</h1>
+            <main className={className}>
+                <h1>{userData.userName}</h1>
 
-                    {userData.posts.map((post: Post) => (
-                        <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
-                    ))}
-                </main>
-            </StyledUserPage>
+                {userData.posts.map((post: Post) => (
+                    <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
+                ))}
+            </main>
         </>
     )
 }
@@ -72,70 +71,13 @@ export const getStaticPaths: GetStaticPaths = async (context: GetStaticPathsCont
     }
 }
 
-const StyledUserPage = styled.div`
+const StyledUserPage = styled(UserPage)`
     background-color: #1029e3;
     height: 100vh;
     color:white;
-
-    header{
-        background:black;
-        color:white;
-        display:flex;
-        flex-flow: row nowrap;
-        align-items:center;
-        justify-content: space-between;
-        height: 100px;
-
-        > *{
-            margin: 5px;
-        }
-
-        button{
-            background:white;
-            border:none;
-            border-radius: 4px;
-            font-size: 14pt;
-            cursor:pointer;
-        }
-    }
-
-    main{
-        display:flex;
-        flex-flow: column nowrap;
-        align-items:center;
-    }
-`
-
-const StyledErrorPage = styled.div`
-    height: 100vh;
     display:flex;
     flex-flow: column nowrap;
     align-items:center;
-    justify-content: center;
-    background: rgb(248, 248, 248);
-
-    .info{
-        width: 100%;
-        max-width: 400px;
-        height: 400px;
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, .3);
-        border-radius: 8px;
-        display:flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        background:white;
-
-        h1{
-            color: rgb(13, 13, 13);
-        }
-        p{
-            color: rgb(43, 43, 43);
-            font-size: 13pt;
-        }
-        a{
-            color: blue;
-            font-size: 14pt;
-        }
-    }
 `
 
+export default StyledUserPage
