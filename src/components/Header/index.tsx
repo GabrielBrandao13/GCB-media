@@ -17,7 +17,7 @@ function Header({ className }: HeaderProps) {
             {user !== null ? (
                 <>
                     <h2>{user.name}</h2>
-                    <Link href="/"><a>Home</a></Link>
+                    <Link href="/home"><a>Home</a></Link>
                     <button onClick={logout}>Logout</button>
                 </>
             ) : (
