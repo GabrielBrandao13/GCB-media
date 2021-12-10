@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import Head from 'next/head'
+import { useState } from 'react';
 import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
 
 import { Post } from '../api/listPosts'
@@ -18,6 +19,9 @@ export default function UserPage({ userData }: UserPageProps) {
 
     return (
         <>
+            <Head>
+                <title>{userData.userName}</title>
+            </Head>
             {deletingUser && (
                 <DeleteUserMenu close={() => setDeletingUser(false)} />
             )}
