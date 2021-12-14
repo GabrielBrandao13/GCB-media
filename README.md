@@ -6,6 +6,8 @@ Projeto criado com o intúito de criar uma rede social simples
 
 * React.js + Next.js
 * MySQL
+* Styled components
+* Typescript
 ___
 ## Esquema de tabelas
 
