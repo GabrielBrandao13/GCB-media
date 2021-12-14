@@ -12,7 +12,7 @@ type authContextValueType = {
     logout: () => void;
 }
 
-type User = {
+export type User = {
     name: string;
     id: string;
 }
@@ -55,7 +55,7 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
         })
 
         setUser(user)
-        Router.push(`/users/${user.name}`)
+        Router.push(`/home`)
 
     }
 
