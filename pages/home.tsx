@@ -6,8 +6,6 @@ import { UserInfo, useUser } from '../src/hooks/useUser'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
 
-import { Modal } from '../src/components/Modal'
-
 type HomeProps = {
     className?: string;
 }
@@ -24,24 +22,14 @@ function Home({ className }: HomeProps) {
         useUser(userInfo?.name).then(res => setUser(res))
     }, [])
 
-    const [showModal, setShowModal] = useState<boolean>(false)
-
     return (
         <>
             <Head>
                 <title>Home - {user?.userName}</title>
             </Head>
-            {showModal && (
-                <Modal close={() => setShowModal(false)}>
-                    <div>
-                        Testando
-                    </div>
-                </Modal>
-            )}
 
             <main className={className}>
                 <a><Link href="/createPost">Adicionar postagem</Link></a>
-                <button onClick={() => setShowModal(true)}>Abrir modal</button>
             </main>
         </>
     )

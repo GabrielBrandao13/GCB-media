@@ -8,7 +8,7 @@ type ModalProps = {
 }
 
 
-function Modal({ close, className, children }: ModalProps) {
+function Menu({ close, className, children }: ModalProps) {
     return (
         <div className={className}>
             <div className="inner">
@@ -22,7 +22,7 @@ function Modal({ close, className, children }: ModalProps) {
     )
 }
 
-const StyledModal = styled(Modal)`
+const StyledMenu = styled(Menu)`
     position: fixed;
     width: 100%;
     height: 100%;
@@ -47,4 +47,4 @@ const StyledModal = styled(Modal)`
     }
 `
 
-export { StyledModal as Modal }
+export { StyledMenu as Menu }
