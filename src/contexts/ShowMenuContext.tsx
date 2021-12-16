@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from 'react'
 import { Menu } from '../components/Menu'
+import { DeleteUserMenu } from '../components/Menu/Menus'
 
 type ShowMenuContextValue = {
     openMenu: (menuName: menusNames) => void;
@@ -11,9 +12,9 @@ type ShowMenuContextProviderProps = {
     children: ReactNode;
 }
 
-type menusNames = 'baseMenu'
+type menusNames = 'deleteUserMenu'
 const menusList = {
-    baseMenu: <h1>Menu teste</h1>
+    deleteUserMenu: DeleteUserMenu
 }
 
 function ShowMenuContextProvider({ children }: ShowMenuContextProviderProps) {

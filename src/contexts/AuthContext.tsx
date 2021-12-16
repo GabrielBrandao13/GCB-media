@@ -10,6 +10,7 @@ type authContextValueType = {
     user: User;
     signIn: (userName: String, password: String) => void;
     logout: () => void;
+    deleteUser: (userName: string, password: string) => void;
 }
 
 export type User = {
@@ -63,8 +64,26 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
         setUser(null)
     }
 
+    async function deleteUser(userName: string, password: string) {
+        await fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userName,
+                password
+            })
+        })
+
+        logout()
+
+        close()
+        Router.push('/')
+    }
+
     return (
-        <AuthContext.Provider value={{ user, signIn, logout } as authContextValueType}>
+        <AuthContext.Provider value={{ user, signIn, logout, deleteUser } as authContextValueType}>
             {children}
         </AuthContext.Provider>
 

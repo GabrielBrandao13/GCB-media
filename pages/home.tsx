@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { UserInfo, useUser } from '../src/hooks/useUser'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
+import { showMenuContext } from '../src/contexts/ShowMenuContext'
 
 type HomeProps = {
     className?: string;
@@ -22,6 +23,8 @@ function Home({ className }: HomeProps) {
         useUser(userInfo?.name).then(res => setUser(res))
     }, [])
 
+    const { openMenu } = useContext(showMenuContext)
+
     return (
         <>
             <Head>
@@ -30,6 +33,7 @@ function Home({ className }: HomeProps) {
 
             <main className={className}>
                 <a><Link href="/createPost">Adicionar postagem</Link></a>
+                <button onClick={() => openMenu('deleteUserMenu')}>Deletar usuário</button>
             </main>
         </>
     )
