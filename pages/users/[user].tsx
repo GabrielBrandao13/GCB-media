@@ -5,6 +5,7 @@ import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsCo
 
 import { Post } from '../api/listPosts'
 
+import { DeleteUserMenu } from '../../src/components/DeleteUserMenu';
 import { ParsedUrlQuery } from 'querystring'
 
 import { UserPost } from '../../src/components/UserPost'
@@ -17,11 +18,16 @@ type UserPageProps = {
 }
 
 function UserPage({ userData, className }: UserPageProps) {
+    const [deletingUser, setDeletingUser] = useState(false);
+
     return (
         <>
             <Head>
                 <title>{userData.userName}</title>
             </Head>
+            {deletingUser && (
+                <DeleteUserMenu close={() => setDeletingUser(false)} />
+            )}
             <main className={className}>
                 <h1>{userData.userName}</h1>
 
