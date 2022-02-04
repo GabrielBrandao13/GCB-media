@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ReactNode } from 'react';
 
 import { Root, Content, Trigger, Overlay, Portal } from '@radix-ui/react-dialog';
@@ -9,10 +9,21 @@ const StyledContent = styled(Content)`
     left: 50%;
     transform: translate(-50%, -50%);
 `
+
+const overlayFadeIn = keyframes`
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+`
+
 const StyledOverlay = styled(Overlay)`
     background: rgba(0, 0, 0, .3);
     inset:0;
     position:fixed;
+    animation: ${overlayFadeIn} .3s;
 `
 
 const StyledButton = styled.button`
