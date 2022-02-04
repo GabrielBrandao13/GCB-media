@@ -25,6 +25,9 @@ const StyledDeleteUserMenu = styled.div`
         justify-content: center;
         align-items:center;
         border-radius: 8px;
+        width: 300px;
+        min-height: 200px;
+        background: white;
 
         > *{
             margin: 5px;

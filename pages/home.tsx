@@ -6,6 +6,9 @@ import { UserInfo, useUser } from '../src/hooks/useUser'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
 
+import { Menu } from '../src/components/Menu';
+import { DeleteUserMenu } from '../src/components/Menu/Menus';
+
 type HomeProps = {
     className?: string;
 }
@@ -30,7 +33,9 @@ function Home({ className }: HomeProps) {
 
             <main className={className}>
                 <a><Link href="/createPost">Adicionar postagem</Link></a>
-                <button>Deletar usuário</button>
+                <Menu buttonTitle='Deletar usuário'>
+                    <DeleteUserMenu />
+                </Menu>
             </main>
         </>
     )

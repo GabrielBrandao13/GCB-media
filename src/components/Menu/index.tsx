@@ -1,50 +1,46 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
+import { ReactNode } from 'react';
+
+import { Root, Content, Trigger, Overlay, Portal } from '@radix-ui/react-dialog';
+
+const StyledContent = styled(Content)`
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`
+const StyledOverlay = styled(Overlay)`
+    background: rgba(0, 0, 0, .3);
+    inset:0;
+    position:fixed;
+`
+
+const StyledButton = styled.button`
+    
+`
 
 type MenuProps = {
-    close: () => void;
-    className?: string;
     children: ReactNode;
+    buttonTitle: string;
 }
 
-
-function Menu({ close, className, children }: MenuProps) {
+function Menu({ children, buttonTitle }: MenuProps) {
     return (
-        <div className={className}>
-            <div className="inner">
-                <div className="options">
-                    <button onClick={close}>Fechar</button>
-                </div>
+        <Root>
+            <Trigger asChild>
+                <StyledButton>
 
-                {children}
-            </div>
-        </div>
+                    {buttonTitle}
+                </StyledButton>
+            </Trigger>
+            <Portal>
+                <StyledOverlay />
+                <StyledContent>
+                    {children}
+                </StyledContent>
+            </Portal>
+        </Root>
     )
 }
 
-const StyledMenu = styled(Menu)`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, .2);
-    backdrop-filter: blur(3px);
-
-    .inner{
-        width: 100%;
-        max-width: 500px;
-        height: 400px;
-        background:white;
-
-        .options{
-            display:flex;
-            flex-flow: row nowrap;
-            align-items:center;
-            justify-content:flex-end;
-        }
-    }
-`
-
-export { StyledMenu as Menu }
+export { Menu }
