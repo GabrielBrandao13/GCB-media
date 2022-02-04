@@ -16,7 +16,13 @@ const StyledOverlay = styled(Overlay)`
 `
 
 const StyledButton = styled.button`
-    
+    font-size: 12pt;
+    border:none;
+    border-radius: 4px;
+    background:rgb(70, 10, 211);
+    cursor:pointer;
+    color:white;
+    padding: 3px;
 `
 
 type MenuProps = {

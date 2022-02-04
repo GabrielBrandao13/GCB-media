@@ -5,6 +5,7 @@ function DeleteUserMenu() {
         <StyledDeleteUserMenu>
             <form>
                 <h2>Deletar usuário</h2>
+                <p>Tem certeza de que deseja deletar seu usuário?(isso não poderá ser desfeito)</p>
 
                 <input
                     type="password"
@@ -28,6 +29,7 @@ const StyledDeleteUserMenu = styled.div`
         width: 300px;
         min-height: 200px;
         background: white;
+        padding: 5px;
 
         > *{
             margin: 5px;
@@ -57,6 +59,11 @@ const StyledDeleteUserMenu = styled.div`
         h2{
             color:rgb(29, 29, 29);
         }
+        p {
+            color: rgb(35, 35, 35);
+            width: 70%;
+        }
+        
         input{
             outline:none;
             border: 2px solid gray;
