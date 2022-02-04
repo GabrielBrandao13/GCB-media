@@ -8,6 +8,7 @@ Projeto criado com o intúito de criar uma rede social simples
 * MySQL
 * Styled components
 * Typescript
+* Radix-ui
 ___
 ## Esquema de tabelas
 
