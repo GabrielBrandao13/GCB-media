@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-type ModalProps = {
+type MenuProps = {
     close: () => void;
     className?: string;
     children: ReactNode;
 }
 
 
-function Menu({ close, className, children }: ModalProps) {
+function Menu({ close, className, children }: MenuProps) {
     return (
         <div className={className}>
             <div className="inner">
