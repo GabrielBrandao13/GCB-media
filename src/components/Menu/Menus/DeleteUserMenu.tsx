@@ -1,15 +1,29 @@
 import styled from 'styled-components';
+import { FormEvent, useContext, useState } from 'react';
+
+import { AuthContext } from '../../../contexts/AuthContext'
 
 function DeleteUserMenu() {
+    const { deleteUser, user } = useContext(AuthContext)
+
+    const [inputPassword, setInputPassword] = useState('')
+
+    async function handleSubmit(e: FormEvent) {
+        e.preventDefault()
+        deleteUser(user.name, inputPassword)
+    }
+
     return (
         <StyledDeleteUserMenu>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>Deletar usuário</h2>
                 <p>Tem certeza de que deseja deletar seu usuário?(isso não poderá ser desfeito)</p>
 
                 <input
                     type="password"
                     placeholder="Digite sua senha"
+                    onChange={e => setInputPassword(e.target.value)}
+                    value={inputPassword}
                 />
                 <div className="buttons">
                     <button type="submit">Deletar</button>
@@ -63,7 +77,7 @@ const StyledDeleteUserMenu = styled.div`
             color: rgb(35, 35, 35);
             width: 70%;
         }
-        
+
         input{
             outline:none;
             border: 2px solid gray;
