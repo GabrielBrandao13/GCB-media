@@ -78,6 +78,7 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
 
     function logout() {
         setUser(null)
+        Router.push('/')
     }
 
     async function deleteUser(userName: string, password: string) {
