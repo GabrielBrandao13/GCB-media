@@ -25,14 +25,45 @@ function UserPage({ userData, className }: UserPageProps) {
             <main className={className}>
                 <h1>{userData.userName}</h1>
 
-                {userData.posts.map((post: Post) => (
-                    <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
-                ))}
+                <h2>Postagens</h2>
+                <div className="posts">
+                    {userData.posts.map((post: Post) => (
+                        <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
+                    ))}
+                </div>
+
             </main>
         </>
     )
 }
 
+const StyledUserPage = styled(UserPage)`
+    background-color: #1029e3;
+    height: 100vh;
+    color:white;
+    display:flex;
+    flex-flow: column nowrap;
+    align-items:center;
+
+    .posts {
+        display:flex;
+        flex-flow: column nowrap;
+        align-items:center;
+        overflow-y: auto;
+        height: 400px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: #162bcf;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #354dff;
+            border-radius: 2px;
+        }
+    }
+`
 interface GetStaticPropsParams extends ParsedUrlQuery {
     user: string
 }
@@ -65,13 +96,5 @@ export const getStaticPaths: GetStaticPaths = async (context: GetStaticPathsCont
     }
 }
 
-const StyledUserPage = styled(UserPage)`
-    background-color: #1029e3;
-    height: 100vh;
-    color:white;
-    display:flex;
-    flex-flow: column nowrap;
-    align-items:center;
-`
 
 export default StyledUserPage

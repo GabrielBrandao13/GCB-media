@@ -49,18 +49,26 @@ const StyledHome = styled(Home)`
     flex-flow: column nowrap;
     align-items:center;
     justify-content:center;
-
+    
     .posts {
         overflow-y: auto;
         display:flex;
         flex-flow: column nowrap;
         align-items:center;
-        background-color: #192cbe;
-        width: 70%;
-        border-radius: 8px;
-        height: 300px;
-    }
+        height: 400px;
 
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: #162bcf;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #354dff;
+            border-radius: 2px;
+        }
+    }
+    
     a {
         text-decoration:none;
         color: white;

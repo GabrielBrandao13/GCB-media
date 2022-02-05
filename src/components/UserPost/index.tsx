@@ -29,7 +29,8 @@ const StyledUserPost = styled(UserPost)`
     padding: 10px;
     color:rgb(11, 11, 11);
     margin: 10px;
-    width: 80%;
+    width: 90vw;
+    max-width: 700px;
 
     p{
         margin: 1px;
