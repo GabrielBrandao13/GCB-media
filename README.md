@@ -33,4 +33,13 @@ text | VARCHAR(100) | Meu primeiro post
 Tabela 1 | Tabela 2 | Coluna
 -| -| -
 tbusers | tbpost | userId
+___
+## Variáveis de ambiente
+
+Campo | Descrição | Exemplo
+-| -| -
+BD_HOST | Servidor onde se localiza o banco de dados | localhost
+BD_USER | Nome de um usuário do banco de dados | root
+BD_PASS | Senha do usuário do banco de dados | 123456
+BD_NAME | Nome do banco de dados | bdusers
 
