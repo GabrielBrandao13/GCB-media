@@ -16,7 +16,9 @@ function CreatePost({ className }: CreatePostProps) {
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault()
-        const res = await fetch('/api/createPost', {
+        if (text.trim() === '') return;
+
+        await fetch('/api/createPost', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -28,7 +30,7 @@ function CreatePost({ className }: CreatePostProps) {
             })
         })
 
-        Router.push(`/${user.name}`)
+        Router.push('/home')
 
     }
 
