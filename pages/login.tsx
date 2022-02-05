@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import Router from 'next/router';
 import { FormEvent, useState, useContext } from 'react';
 import { AuthContext } from '../src/contexts/AuthContext';
 
@@ -13,7 +14,10 @@ export default function Login() {
     async function handleLogin(e: FormEvent) {
         e.preventDefault()
 
-        signIn(user, pass)
+        const signInResult = await signIn(user, pass)
+        if (signInResult.sucess) {
+            Router.push('/home')
+        }
     }
 
     return (

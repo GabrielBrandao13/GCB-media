@@ -2,13 +2,15 @@ import { ReactNode, createContext, useState, useEffect } from "react";
 import { setCookie, parseCookies } from 'nookies'
 import Router from "next/router";
 
+import { LoginApiResponse } from '../../pages/api/login';
+
 type AuthContextProviderPropsType = {
     children: ReactNode;
 }
 
 type authContextValueType = {
     user: User;
-    signIn: (userName: String, password: String) => void;
+    signIn: (userName: String, password: String) => Promise<signInReturn>;
     logout: () => void;
     deleteUser: (userName: string, password: string) => void;
 }
@@ -16,12 +18,17 @@ type authContextValueType = {
 export type User = {
     name: string;
     id: string;
+} | null
+
+type signInReturn = {
+    sucess: boolean;
+    status: string;
 }
 
 export const AuthContext = createContext({} as authContextValueType)
 
 export function AuthContextProvider({ children }: AuthContextProviderPropsType) {
-    const [user, setUser] = useState<User | null>(null)
+    const [user, setUser] = useState<User>(null)
 
     useEffect(() => {
         const { 'nextauth.username': userName, 'nextauth.userid': userId } = parseCookies()
@@ -33,7 +40,7 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
         }
     }, [])
 
-    async function signIn(userName: String, password: String) {
+    async function signIn(userName: String, password: String): Promise<signInReturn> {
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -45,19 +52,28 @@ export function AuthContextProvider({ children }: AuthContextProviderPropsType) 
             }),
         })
 
-        const data = await res.json()
-        const { user, token } = data
+        const data = await res.json() as LoginApiResponse
+        const { user, sucess, status } = data
 
-        setCookie(undefined, 'nextauth.username', user.name, {
+        setCookie(undefined, 'nextauth.username', `${user?.name}`, {
             maxAge: 60 * 60 * 1,
         })
-        setCookie(undefined, 'nextauth.userid', user.id, {
+        setCookie(undefined, 'nextauth.userid', `${user?.id}`, {
             maxAge: 60 * 60 * 1,
         })
 
-        setUser(user)
-        Router.push(`/home`)
+        if (sucess) {
+            setUser({
+                id: `${user?.id}`,
+                name: `${user?.name}`
+            })
+        }
 
+
+        return {
+            sucess,
+            status
+        }
     }
 
     function logout() {

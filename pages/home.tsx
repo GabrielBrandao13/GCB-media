@@ -21,7 +21,7 @@ function Home({ className }: HomeProps) {
         if (userInfo === null) {
             router.push('/login')
         }
-        useUser(userInfo?.name).then(res => setUser(res))
+        useUser(`${userInfo?.name}`).then(res => setUser(res))
     }, [])
 
     return (
