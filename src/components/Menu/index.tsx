@@ -39,16 +39,16 @@ const StyledButton = styled.button`
 type MenuProps = {
     children: ReactNode;
     buttonTitle: string;
+    buttonClassName: string;
 }
 
-function Menu({ children, buttonTitle }: MenuProps) {
+function Menu({ children, buttonTitle, buttonClassName }: MenuProps) {
     return (
         <Root>
             <Trigger asChild>
-                <StyledButton>
-
+                <button className={buttonClassName}>
                     {buttonTitle}
-                </StyledButton>
+                </button>
             </Trigger>
             <Portal>
                 <StyledOverlay />

@@ -6,7 +6,7 @@ import { UserInfo, useUser } from '../src/hooks/useUser'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
 
-import { UserPost } from '../src/components/UserPost';;
+import { UserPost } from '../src/components/UserPost';
 
 type HomeProps = {
     className?: string;
