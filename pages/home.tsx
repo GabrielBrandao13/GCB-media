@@ -6,8 +6,7 @@ import { UserInfo, useUser } from '../src/hooks/useUser'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
 
-import { Menu } from '../src/components/Menu';
-import { DeleteUserMenu } from '../src/components/Menu/Menus';
+import { UserPost } from '../src/components/UserPost';;
 
 type HomeProps = {
     className?: string;
@@ -32,10 +31,11 @@ function Home({ className }: HomeProps) {
             </Head>
 
             <main className={className}>
-                <a><Link href="/createPost">Adicionar postagem</Link></a>
-                <Menu buttonTitle='Deletar usuário'>
-                    <DeleteUserMenu />
-                </Menu>
+                <h2>Suas postagens</h2>
+                <div className="posts">
+                    {user?.posts.map(post => <UserPost date={post.datePost} imageUrl={post.imageUrl} text={post.text} key={post.postId} />)}
+                </div>
+                <a className="add-post"><Link href="/createPost">Adicionar postagem</Link></a>
             </main>
         </>
     )
@@ -50,9 +50,28 @@ const StyledHome = styled(Home)`
     align-items:center;
     justify-content:center;
 
+    .posts {
+        overflow-y: auto;
+        display:flex;
+        flex-flow: column nowrap;
+        align-items:center;
+        background-color: #192cbe;
+        width: 70%;
+        border-radius: 8px;
+        height: 300px;
+    }
+
     a {
         text-decoration:none;
         color: white;
+    }
+
+    .add-post{
+        border: 1px solid white;
+        border-radius: 4px;
+        padding: 3px;
+        font-size: 12pt;
+        margin: 5px;
     }
 `
 

@@ -28,6 +28,7 @@ const StyledUserPost = styled(UserPost)`
     border-radius: 5px;
     padding: 10px;
     color:rgb(11, 11, 11);
+    margin: 10px;
     width: 80%;
 
     p{
