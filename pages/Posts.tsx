@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { PostsApiResponse } from './api/posts';
 import { UserPost } from '../src/components/UserPost';
+import { PostsWrapper } from '../src/components/PostsWrapper';
 
 type PostsProps = {
     className: string;
@@ -26,11 +27,11 @@ function Posts({ className }: PostsProps) {
             <main className={className}>
                 <h2>Posts mais recentes</h2>
 
-                <div className="posts">
+                <PostsWrapper>
                     {posts.map(post => (
-                        <UserPost date={post.datePost} imageUrl={post.imageUrl} text={post.text} />
+                        <UserPost date={post.datePost} text={post.text} imageUrl={post.imageUrl} />
                     ))}
-                </div>
+                </PostsWrapper>
             </main>
         </>
     )
@@ -39,18 +40,10 @@ function Posts({ className }: PostsProps) {
 export default styled(Posts)`
     min-height: 100vh;
     background: red;
-    margin: 0;
+    color:white;
 
     display:flex;
     flex-flow: column nowrap;
     align-items:center;
     justify-content:center;
-
-    .posts{
-        display:flex;
-        flex-flow: column nowrap;
-        align-items:center;
-        justify-content:center;
-
-    }
 `

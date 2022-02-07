@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/contexts/AuthContext'
 
 import { UserPost } from '../src/components/UserPost';
+import { PostsWrapper } from '../src/components/PostsWrapper'
 
 type HomeProps = {
     className?: string;
@@ -32,9 +33,9 @@ function Home({ className }: HomeProps) {
 
             <main className={className}>
                 <h2>Suas postagens</h2>
-                <div className="posts">
+                <PostsWrapper>
                     {user?.posts.map(post => <UserPost date={post.datePost} imageUrl={post.imageUrl} text={post.text} key={post.postId} />)}
-                </div>
+                </PostsWrapper>
                 <a className="add-post"><Link href="/createPost">Adicionar postagem</Link></a>
             </main>
         </>
@@ -49,25 +50,6 @@ const StyledHome = styled(Home)`
     flex-flow: column nowrap;
     align-items:center;
     justify-content:center;
-    
-    .posts {
-        overflow-y: auto;
-        display:flex;
-        flex-flow: column nowrap;
-        align-items:center;
-        height: 400px;
-
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
-        &::-webkit-scrollbar-track {
-            background-color: #162bcf;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: #354dff;
-            border-radius: 2px;
-        }
-    }
     
     a {
         text-decoration:none;

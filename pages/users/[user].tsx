@@ -1,15 +1,14 @@
 import styled from 'styled-components';
+
 import Head from 'next/head'
-import { useState } from 'react';
 import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
-
-import { Post } from '../api/listPosts'
-
 import { ParsedUrlQuery } from 'querystring'
 
-import { UserPost } from '../../src/components/UserPost'
-
+import { Post } from '../api/listPosts'
 import { useUser } from '../../src/hooks/useUser'
+
+import { UserPost } from '../../src/components/UserPost'
+import { PostsWrapper } from '../../src/components/PostsWrapper'
 
 type UserPageProps = {
     userData: GetStaticPropsFinalData;
@@ -26,11 +25,11 @@ function UserPage({ userData, className }: UserPageProps) {
                 <h1>{userData.userName}</h1>
 
                 <h2>Postagens</h2>
-                <div className="posts">
+                <PostsWrapper>
                     {userData.posts.map((post: Post) => (
                         <UserPost key={post.postId} text={post.text} imageUrl={post.imageUrl} date={post.datePost} />
                     ))}
-                </div>
+                </PostsWrapper>
 
             </main>
         </>
@@ -44,25 +43,6 @@ const StyledUserPage = styled(UserPage)`
     display:flex;
     flex-flow: column nowrap;
     align-items:center;
-
-    .posts {
-        display:flex;
-        flex-flow: column nowrap;
-        align-items:center;
-        overflow-y: auto;
-        height: 400px;
-
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
-        &::-webkit-scrollbar-track {
-            background-color: #162bcf;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: #354dff;
-            border-radius: 2px;
-        }
-    }
 `
 interface GetStaticPropsParams extends ParsedUrlQuery {
     user: string
