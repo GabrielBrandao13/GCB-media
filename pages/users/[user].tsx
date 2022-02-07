@@ -38,7 +38,6 @@ function UserPage({ userData, className }: UserPageProps) {
 
 const StyledUserPage = styled(UserPage)`
     background-color: #1029e3;
-    height: 100vh;
     color:white;
     display:flex;
     flex-flow: column nowrap;

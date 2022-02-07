@@ -38,7 +38,6 @@ function Posts({ className }: PostsProps) {
 }
 
 export default styled(Posts)`
-    min-height: 100vh;
     background: red;
     color:white;
 

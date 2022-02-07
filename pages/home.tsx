@@ -44,7 +44,6 @@ function Home({ className }: HomeProps) {
 
 const StyledHome = styled(Home)`
     background-color: #1029e3;
-    min-height: 90vh;
     color:white;
     display:flex;
     flex-flow: column nowrap;

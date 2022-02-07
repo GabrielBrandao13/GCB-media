@@ -13,7 +13,7 @@ export default function Home() {
   let userName = '';
   const { user } = useContext(AuthContext)
   if (!!user) {
-    userName = useContext(AuthContext).user.name;
+    userName = user.name;
   }
   const router = useRouter();
 
@@ -29,48 +29,43 @@ export default function Home() {
         <title>GCB media - início</title>
       </Head>
       <StyledHome>
-        <main>
-          <h1>Bem vindo(a)!{userName && ` ${userName}`}</h1>
-          <form onSubmit={handleSearchUser}>
-            <input
-              type="text"
-              onChange={e => setUserSearch(e.target.value)}
-              value={userSearch}
-              placeholder="Que usuário deseja conhecer?"
-            />
-          </form>
-        </main>
+        <h1>Bem vindo(a)!{userName && ` ${userName}`}</h1>
+        <form onSubmit={handleSearchUser}>
+          <input
+            type="text"
+            onChange={e => setUserSearch(e.target.value)}
+            value={userSearch}
+            placeholder="Que usuário deseja conhecer?"
+          />
+        </form>
       </StyledHome>
 
     </>
   )
 }
 
-const StyledHome = styled.div`
-  height: 100vh;
+const StyledHome = styled.main`
   background: #4110e3;
   color:white;
 
-  main{
+  display:flex;
+  flex-flow: column nowrap;
+  align-items:center;
+
+  form{
+    width: 100%;
+    max-width: 400px;
     display:flex;
     flex-flow: column nowrap;
-    align-items:center;
+    align-items: center;
 
-    form{
+    input{
       width: 100%;
-      max-width: 400px;
-      display:flex;
-      flex-flow: column nowrap;
-      align-items: center;
-
-      input{
-        width: 100%;
-        border:none;
-        border-radius: 8px;
-        padding: 10px;
-        outline: none;
-        font-size: 11pt;
-      }
+      border:none;
+      border-radius: 8px;
+      padding: 10px;
+      outline: none;
+      font-size: 11pt;
     }
   }
 `
