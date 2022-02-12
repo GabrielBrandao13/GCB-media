@@ -63,10 +63,12 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
     }
     return {
         props: {
-            posts: userData.posts,
-            user: userData.user
-        } as GetStaticPropsFinalData,
-        revalidate: 60
+            userData: {
+                posts: userData.posts,
+                user: userData.user,
+            } as GetStaticPropsFinalData
+        },
+        revalidate: 60,
     }
 }
 
