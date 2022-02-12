@@ -4,6 +4,8 @@ import Router from "next/router";
 
 import { LoginApiResponse } from '../../pages/api/login';
 
+import type { User } from '../types/User'
+
 type AuthContextProviderPropsType = {
     children: ReactNode;
 }
@@ -15,11 +17,6 @@ type authContextValueType = {
     deleteUser: (userName: string, password: string) => void;
 }
 
-export type User = {
-    name: string;
-    id: string;
-} | null
-
 type signInReturn = {
     sucess: boolean;
     status: string;
@@ -28,7 +25,7 @@ type signInReturn = {
 export const AuthContext = createContext({} as authContextValueType)
 
 export function AuthContextProvider({ children }: AuthContextProviderPropsType) {
-    const [user, setUser] = useState<User>(null)
+    const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
         const { 'nextauth.username': userName, 'nextauth.userid': userId } = parseCookies()
