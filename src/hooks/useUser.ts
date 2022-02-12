@@ -1,10 +1,12 @@
 import { Post } from '../types/Post'
 import { User } from '../types/User'
 
+import { UserInfoApiResponse } from '../../pages/api/userInfo'
+
 export type UserInfo = {
-    user: User;
+    user?: User;
     posts: Post[];
-}
+} | null
 
 type useUserType = (userName: string) => Promise<UserInfo | null>
 
@@ -26,11 +28,10 @@ const useUser: useUserType = async (userName: string): Promise<UserInfo | null> 
         })
     })
 
-    const userData = await userDataReq.json()
+    const userData = await userDataReq.json() as UserInfoApiResponse
     if (!userData.sucess) return null
 
-    finalData.user.id = userData.user.id
-    finalData.user.name = userData.user.name
+    finalData.user = userData.user
 
     const userPostsReq = await fetch('http://localhost:3000/api/listPosts', {
         method: 'POST',
@@ -38,7 +39,7 @@ const useUser: useUserType = async (userName: string): Promise<UserInfo | null> 
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            userId: finalData.user.id
+            userId: finalData.user?.id
         })
     })
     const userPosts = await userPostsReq.json() as Post[]

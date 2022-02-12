@@ -1,5 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
 import { connection } from '../../src/services/mysql';
+import { User } from '../../src/types/User';
+
+export type UserInfoApiResponse = {
+    status: string;
+    sucess: boolean;
+    user?: User;
+}
 
 export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
     const { userName } = req.body
@@ -8,7 +15,7 @@ export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
         return res.json({
             status: 'Informações faltantes',
             sucess: false
-        })
+        } as UserInfoApiResponse)
     }
 
     connection.query(
@@ -22,7 +29,7 @@ export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
                 return res.json({
                     status: 'Falha ao coletar informações do usuário',
                     sucess: false,
-                })
+                } as UserInfoApiResponse)
             }
             return res.json({
                 status: 'Usuário encontrado',
@@ -31,7 +38,7 @@ export default function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
                     name: result[0].userName,
                     id: result[0].userId
                 }
-            })
+            } as UserInfoApiResponse)
         }
 
     )

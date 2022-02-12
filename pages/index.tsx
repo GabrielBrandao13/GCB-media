@@ -23,7 +23,7 @@ export default function Home() {
         <title>GCB media - início</title>
       </Head>
       <StyledHome>
-        <h1>Bem vindo(a)!{user.name && ` ${user.name}`}</h1>
+        <h1>Bem vindo(a)!{user?.name && ` ${user.name}`}</h1>
         <form onSubmit={handleSearchUser}>
           <input
             type="text"

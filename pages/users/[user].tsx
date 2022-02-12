@@ -58,13 +58,14 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
     const { user } = context.params as GetStaticPropsParams
 
     const userData = await useUser(user)
-    if (userData === null) return {
+    if (userData === null || userData === undefined) return {
         notFound: true
     }
     return {
         props: {
-            userData
-        },
+            posts: userData.posts,
+            user: userData.user
+        } as GetStaticPropsFinalData,
         revalidate: 60
     }
 }

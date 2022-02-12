@@ -16,7 +16,7 @@ type HomeProps = {
 function Home({ className }: HomeProps) {
     const router = useRouter()
     const userInfo = useAuth().user
-    const [user, setUser] = useState<UserInfo | null>()
+    const [user, setUser] = useState<UserInfo | null>(null)
 
     useEffect(() => {
         if (userInfo === null) {
