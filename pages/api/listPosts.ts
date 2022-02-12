@@ -1,13 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connection } from '../../src/services/mysql'
 
-export type Post = {
-    postId: number;
-    userId: number;
-    imageUrl: string;
-    text: string;
-    datePost: string;
-}
+import type { Post } from '../../src/types/Post'
 
 function listPosts(req: NextApiRequest, res: NextApiResponse) {
     const { userId } = req.body

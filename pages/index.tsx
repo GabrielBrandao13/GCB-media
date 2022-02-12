@@ -4,17 +4,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { FormEvent, useContext, useState } from 'react';
-import { AuthContext } from '../src/contexts/AuthContext';
-
+import { FormEvent, useState } from 'react';
+import { useAuth } from '../src/hooks/useAuth';
 
 export default function Home() {
 
-  let userName = '';
-  const { user } = useContext(AuthContext)
-  if (!!user) {
-    userName = user.name;
-  }
+  const { user } = useAuth()
   const router = useRouter();
 
   const [userSearch, setUserSearch] = useState('')
@@ -29,7 +24,7 @@ export default function Home() {
         <title>GCB media - início</title>
       </Head>
       <StyledHome>
-        <h1>Bem vindo(a)!{userName && ` ${userName}`}</h1>
+        <h1>Bem vindo(a)!{user.name && ` ${user.name}`}</h1>
         <form onSubmit={handleSearchUser}>
           <input
             type="text"

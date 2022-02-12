@@ -4,11 +4,13 @@ import Head from 'next/head'
 import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-import { Post } from '../api/listPosts'
+import { Post } from '../../src/types/Post'
 import { useUser } from '../../src/hooks/useUser'
 
 import { UserPost } from '../../src/components/UserPost'
 import { PostsWrapper } from '../../src/components/PostsWrapper'
+
+import type { User } from '../../src/types/User'
 
 type UserPageProps = {
     userData: GetStaticPropsFinalData;
@@ -19,10 +21,10 @@ function UserPage({ userData, className }: UserPageProps) {
     return (
         <>
             <Head>
-                <title>{userData.userName}</title>
+                <title>{userData.user.name}</title>
             </Head>
             <main className={className}>
-                <h1>{userData.userName}</h1>
+                <h1>{userData.user.name}</h1>
 
                 <h2>Postagens</h2>
                 <PostsWrapper>
@@ -48,8 +50,7 @@ interface GetStaticPropsParams extends ParsedUrlQuery {
 }
 
 type GetStaticPropsFinalData = {
-    userName: string;
-    id: number | null;
+    user: User;
     posts: Post[];
 }
 

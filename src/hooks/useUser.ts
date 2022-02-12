@@ -1,17 +1,19 @@
-import { Post } from '../../pages/api/listPosts'
+import { Post } from '../types/Post'
+import { User } from '../types/User'
 
 export type UserInfo = {
-    userName: string;
-    id: number | null;
+    user: User;
     posts: Post[];
-} | null
+}
 
-type useUserType = (userName: string) => Promise<UserInfo>
+type useUserType = (userName: string) => Promise<UserInfo | null>
 
-const useUser: useUserType = async (userName: string) => {
+const useUser: useUserType = async (userName: string): Promise<UserInfo | null> => {
     let finalData: UserInfo = {
-        id: 0,
-        userName: userName,
+        user: {
+            id: '0',
+            name: userName,
+        },
         posts: []
     }
     const userDataReq = await fetch('http://localhost:3000/api/userInfo', {
@@ -27,8 +29,8 @@ const useUser: useUserType = async (userName: string) => {
     const userData = await userDataReq.json()
     if (!userData.sucess) return null
 
-    finalData.id = userData.user.id
-    finalData.userName = userData.user.name
+    finalData.user.id = userData.user.id
+    finalData.user.name = userData.user.name
 
     const userPostsReq = await fetch('http://localhost:3000/api/listPosts', {
         method: 'POST',
@@ -36,7 +38,7 @@ const useUser: useUserType = async (userName: string) => {
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            userId: finalData.id
+            userId: finalData.user.id
         })
     })
     const userPosts = await userPostsReq.json() as Post[]

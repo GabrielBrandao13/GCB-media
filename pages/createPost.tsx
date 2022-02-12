@@ -1,15 +1,15 @@
 import styled from 'styled-components'
-import { FormEvent, useContext, useState } from 'react'
+import { FormEvent, useState } from 'react'
 
-import { AuthContext } from '../src/contexts/AuthContext'
 import Router from 'next/router'
+import { useAuth } from '../src/hooks/useAuth'
 
 type CreatePostProps = {
     className: string;
 }
 
 function CreatePost({ className }: CreatePostProps) {
-    const { user } = useContext(AuthContext)
+    const { user } = useAuth()
 
     const [text, setText] = useState('')
     const imageUrl = ''

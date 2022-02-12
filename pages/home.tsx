@@ -3,11 +3,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { UserInfo, useUser } from '../src/hooks/useUser'
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../src/contexts/AuthContext'
+import { useEffect, useState } from 'react'
 
 import { UserPost } from '../src/components/UserPost';
 import { PostsWrapper } from '../src/components/PostsWrapper'
+import { useAuth } from '../src/hooks/useAuth'
 
 type HomeProps = {
     className?: string;
@@ -15,20 +15,20 @@ type HomeProps = {
 
 function Home({ className }: HomeProps) {
     const router = useRouter()
-    const userInfo = useContext(AuthContext).user
-    const [user, setUser] = useState<UserInfo>()
+    const userInfo = useAuth().user
+    const [user, setUser] = useState<UserInfo | null>()
 
     useEffect(() => {
         if (userInfo === null) {
             router.push('/login')
         }
-        useUser(`${userInfo?.name}`).then(res => setUser(res))
+        useUser(`${userInfo.name}`).then(res => setUser(res))
     }, [])
 
     return (
         <>
             <Head>
-                <title>Home - {user?.userName}</title>
+                <title>Home - {userInfo.name}</title>
             </Head>
 
             <main className={className}>
